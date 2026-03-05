@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SER II · Gestão de Processos</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Fonte Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #edf4ff 0%, #ffffff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .container-ser {
+            max-width: 1400px;
+            width: 100%;
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 30px 60px -15px rgba(0, 30, 70, 0.3);
+            border: 1px solid rgba(0, 65, 150, 0.12);
+            overflow: hidden;
+        }
+
+        .cabecalho {
+            background: #0a2540;
+            padding: 1.8rem 2.8rem;
+            border-bottom: 3px solid #2b6ef0;
+        }
+        .cabecalho h1 {
+            color: white;
+            font-weight: 600;
+            font-size: 2rem;
+            letter-spacing: -0.02em;
+        }
+        .subtitulo {
+            color: #a0c0f0;
+            font-size: 0.95rem;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .subtitulo i {
+            color: #5c9aff;
+        }
+
+        /* Conteúdo principal - agora sem abas internas */
+        .painel-principal {
+            padding: 2.5rem 2.8rem;
+            background: white;
+        }
+
+        /* Formulário de cadastro */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1.2fr 1.2fr 1fr auto;
+            gap: 1rem;
+            align-items: end;
+            margin-bottom: 2.2rem;
+            background: #f8fcff;
+            padding: 2rem;
+            border-radius: 30px;
+            border: 1px solid #dde9ff;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .campo label {
+            font-weight: 600;
+            color: #1a3c6a;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .campo label i {
+            color: #2b6ef0;
+            width: 18px;
+        }
+        .campo input {
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #d3e2ff;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            background: white;
+            transition: 0.15s;
+            width: 100%;
+        }
+        .campo input:focus {
+            border-color: #2b6ef0;
+            box-shadow: 0 0 0 4px rgba(43,110,240,0.15);
+            outline: none;
+        }
+
+        .btn-primario {
+            background: #0a2c62;
+            color: white;
+            font-weight: 700;
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 12px 20px -8px #0a2c62b3;
+            transition: 0.15s;
+            height: 52px;
+            border: 1px solid #3f7bff;
+            white-space: nowrap;
+        }
+        .btn-primario:hover {
+            background: #123e82;
+            transform: scale(1.02);
+        }
+        .btn-secundario {
+            background: white;
+            border: 2px solid #b9d1ff;
+            color: #0a2c62;
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.15s;
+        }
+        .btn-secundario:hover {
+            background: #e5f0ff;
+            border-color: #7ca5ff;
+        }
+
+        /* Barra de ferramentas */
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin: 2rem 0 1.5rem;
+        }
+        .busca-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 0.2rem 0.2rem 0.2rem 1.5rem;
+            border-radius: 60px;
+            border: 2px solid #dae6ff;
+            min-width: 340px;
+        }
+        .busca-wrapper i {
+            color: #5f8bff;
+        }
+        .busca-wrapper input {
+            border: none;
+            padding: 0.8rem 0;
+            font-size: 0.95rem;
+            width: 1px;
+            flex: 1;
+            background: transparent;
+        }
+        .busca-wrapper input:focus {
+            outline: none;
+        }
+        .busca-wrapper button {
+            background: #0b2b5c;
+            border: none;
+            color: white;
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+            white-space: nowrap;
+        }
+        .busca-wrapper button:hover {
+            background: #133e7c;
+        }
+
+        /* Tabela */
+        .tabela-container {
+            overflow-x: auto;
+            border-radius: 28px;
+            background: #fbfdff;
+            padding: 0.2rem 0;
+        }
+        .tabela-processos {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+        .tabela-processos thead tr {
+            background: #edf4fe;
+        }
+        .tabela-processos th {
+            text-align: left;
+            padding: 1.2rem 1.2rem;
+            font-weight: 700;
+            color: #0a2540;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #edf4fe;
+        }
+        .tabela-processos th i {
+            color: #1d4dd0;
+            margin-right: 6px;
+        }
+        .tabela-processos td {
+            background: white;
+            padding: 1.2rem 1.2rem;
+            border-bottom: 2px solid #ecf3ff;
+            border-radius: 18px;
+            vertical-align: middle;
+        }
+        .linha-processo:hover td {
+            background: #f3f9ff;
+        }
+        .numero-ordem {
+            display: inline-block;
+            background: #0a2c62;
+            color: white;
+            font-weight: 700;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            min-width: 50px;
+            text-align: center;
+        }
+        .badge-numero {
+            font-weight: 600;
+            background: #deeaff;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            color: #0b2b5c;
+            display: inline-block;
+        }
+        .data-badge {
+            font-weight: 500;
+            background: #e8f0fe;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            color: #1d4dd0;
+            display: inline-block;
+            font-size: 0.85rem;
+            border: 1px solid #c7daff;
+        }
+        .acoes {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-acao {
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,30,80,0.1);
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .btn-acao:hover { transform: scale(1.1); }
+        .editar-acao { background: #1d4dd0; }
+        .excluir-acao { background: #b22234; }
+
+        /* MODAL DE EDIÇÃO (centralizado) */
+        .modal-editar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 20, 50, 0.8);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .modal-editar-card {
+            background: white;
+            width: 90%;
+            max-width: 700px;
+            border-radius: 40px;
+            padding: 2.5rem;
+            box-shadow: 0 40px 70px rgba(0, 10, 40, 0.6);
+            animation: modalFadeIn 0.3s ease;
+            border: 1px solid #9bbaff;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-editar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #eef3ff;
+            padding-bottom: 1.2rem;
+        }
+        .modal-editar-header h2 {
+            color: #0a2540;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .fechar-modal {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #7a93bb;
+            transition: 0.15s;
+        }
+        .fechar-modal:hover {
+            color: #b22234;
+            transform: scale(1.1);
+        }
+
+        .grid-edicao {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+            margin: 1.5rem 0;
+        }
+        .campo-full {
+            grid-column: span 2;
+        }
+
+        /* Modal de exclusão (existente) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,15,40,0.7);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+        .modal-card {
+            background: white;
+            max-width: 400px;
+            padding: 2.5rem;
+            border-radius: 50px;
+            text-align: center;
+            box-shadow: 0 30px 50px #00112e;
+        }
+        .toast {
+            visibility: hidden;
+            background: #0a2540;
+            color: white;
+            padding: 1rem 2.2rem;
+            border-radius: 60px;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            font-weight: 500;
+            box-shadow: 0 18px 35px #001b44;
+            z-index: 1100;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .toast.mostrar { visibility: visible; opacity: 1; }
+
+        @media (max-width: 1200px) {
+            .form-row { grid-template-columns: 1fr 1fr 1fr; }
+        }
+        @media (max-width: 900px) {
+            .form-row { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 800px) {
+            .form-row { grid-template-columns: 1fr; }
+            .toolbar { flex-direction: column; }
+            .busca-wrapper { width: 100%; }
+            .grid-edicao { grid-template-columns: 1fr; }
+            .campo-full { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-ser">
+        <div class="cabecalho">
+            <h1>SER II · Processos</h1>
+            <div class="subtitulo">
+                <i class="fas fa-location-dot"></i> Secretaria Executiva Regional 2 · Fortaleza/CE
+            </div>
+        </div>
+
+        <!-- Painel Principal (único) -->
+        <div class="painel-principal">
+            <!-- Formulário de cadastro -->
+            <div class="form-row">
+                <div class="campo">
+                    <label><i class="fas fa-hashtag"></i> Nº Processo</label>
+                    <input type="text" id="numeroProcesso" placeholder="P2374/2025">
+                </div>
+                <div class="campo">
+                    <label><i class="fas fa-calendar"></i> Data</label>
+                    <input type="date" id="dataProcesso">
+                </div>
+                <div class="campo">
+                    <label><i class="fas fa-tag"></i> Assunto</label>
+                    <input type="text" id="assunto" placeholder="Obrigatório">
+                </div>
+                <div class="campo">
+                    <label><i class="fas fa-location-dot"></i> Destino</label>
+                    <input type="text" id="destino" placeholder="Obrigatório">
+                </div>
+                <div class="campo">
+                    <label><i class="fas fa-pen"></i> Observação</label>
+                    <input type="text" id="observacoes" placeholder="Opcional">
+                </div>
+                <button class="btn-primario" id="btnRegistrar"><i class="fas fa-check-circle"></i> Registrar</button>
+            </div>
+
+            <!-- Barra de pesquisa -->
+            <div class="toolbar">
+                <div class="busca-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="campoBusca" placeholder="Pesquisar por número do processo...">
+                    <button id="btnBuscar">Buscar</button>
+                </div>
+                <button class="btn-secundario" id="btnRefresh"><i class="fas fa-sync-alt"></i> Atualizar lista</button>
+            </div>
+
+            <!-- Tabela de processos -->
+            <div class="tabela-container">
+                <table class="tabela-processos" id="tabelaProcessos">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-sort-numeric-down"></i> Nº</th>
+                            <th><i class="fas fa-calendar"></i> Data</th>
+                            <th><i class="fas fa-file-lines"></i> Número do Processo</th>
+                            <th><i class="fas fa-message"></i> Assunto</th>
+                            <th><i class="fas fa-location-dot"></i> Destino</th>
+                            <th><i class="fas fa-comment"></i> Observação</th>
+                            <th><i class="fas fa-edit"></i> Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabela"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE EDIÇÃO (centralizado) -->
+    <div class="modal-editar-overlay" id="modalEditar">
+        <div class="modal-editar-card">
+            <div class="modal-editar-header">
+                <h2><i class="fas fa-edit" style="color:#1d4dd0;"></i> Editar Processo</h2>
+                <button class="fechar-modal" onclick="fecharModalEditar()"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="formEditarModal" onsubmit="salvarEdicaoModal(event)">
+                <div class="grid-edicao">
+                    <div class="campo">
+                        <label><i class="fas fa-hashtag"></i> Número do Processo *</label>
+                        <input type="text" id="editarNumero" required>
+                    </div>
+                    <div class="campo">
+                        <label><i class="fas fa-calendar"></i> Data *</label>
+                        <input type="date" id="editarData" required>
+                    </div>
+                    <div class="campo">
+                        <label><i class="fas fa-tag"></i> Assunto *</label>
+                        <input type="text" id="editarAssunto" required>
+                    </div>
+                    <div class="campo">
+                        <label><i class="fas fa-location-dot"></i> Destino *</label>
+                        <input type="text" id="editarDestino" required>
+                    </div>
+                    <div class="campo campo-full">
+                        <label><i class="fas fa-pen"></i> Observações</label>
+                        <input type="text" id="editarObservacoes">
+                    </div>
+                </div>
+                <input type="hidden" id="editarId">
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                    <button type="submit" class="btn-primario"><i class="fas fa-save"></i> Salvar Alterações</button>
+                    <button type="button" class="btn-secundario" onclick="fecharModalEditar()"><i class="fas fa-times"></i> Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Excluir (existente) -->
+    <div class="modal-overlay" id="modalExcluir">
+        <div class="modal-card">
+            <i class="fas fa-trash-alt" style="font-size:3rem; color:#b22234;"></i>
+            <h3 style="margin:1.2rem 0 0.4rem; color:#0a2540;">Confirmar exclusão</h3>
+            <p>O processo será permanentemente removido.</p>
+            <div style="display:flex; gap:1rem; justify-content:center; margin-top:2rem;">
+                <button class="btn-secundario" id="cancelarExcluir">Cancelar</button>
+                <button class="btn-primario" id="confirmarExcluir" style="background:#b22234;">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"><i class="fas fa-circle-check"></i> <span></span></div>
+
+    <script>
+        // === INICIALIZAÇÃO ===
+        const STORAGE_KEY = 'processos_ser2_modal';
+        let processos = [];
+        let processoParaExcluir = null;
+
+        // Função para formatar data no padrão brasileiro
+        function formatarDataBR(dataISO) {
+            if (!dataISO) return '—';
+            const [ano, mes, dia] = dataISO.split('-');
+            return `${dia}/${mes}/${ano}`;
+        }
+
+        // Função para validar data
+        function validarData(data) {
+            return /^\d{4}-\d{2}-\d{2}$/.test(data);
+        }
+
+        // Carregar dados do localStorage
+        function carregarProcessos() {
+            const dados = localStorage.getItem(STORAGE_KEY);
+            if (dados) {
+                try {
+                    processos = JSON.parse(dados);
+                } catch (e) {
+                    processos = [];
+                }
+            } else {
+                // Dados iniciais para teste com data atual
+                const hoje = new Date().toISOString().split('T')[0];
+                processos = [
+                    {
+                        id: '1',
+                        numero: 'P2374/2025',
+                        data: hoje,
+                        assunto: 'Licitação de Material',
+                        destino: 'Divisão de Compras',
+                        observacoes: 'Processo urgente',
+                        dataInclusao: new Date().toLocaleDateString('pt-BR')
+                    },
+                    {
+                        id: '2',
+                        numero: 'P1289/2025',
+                        data: hoje,
+                        assunto: 'Contrato de Limpeza',
+                        destino: 'Serviços Gerais',
+                        observacoes: 'Renovação anual',
+                        dataInclusao: new Date().toLocaleDateString('pt-BR')
+                    }
+                ];
+            }
+            salvarProcessos();
+        }
+
+        // Salvar dados no localStorage
+        function salvarProcessos() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(processos));
+        }
+
+        // === FUNÇÕES DE RENDERIZAÇÃO ===
+        function renderizarTabela(filtro = '') {
+            const tbody = document.getElementById('corpoTabela');
+            if (!tbody) return;
+
+            let listaFiltrada = processos;
+            if (filtro.trim() !== '') {
+                const termo = filtro.trim().toUpperCase();
+                listaFiltrada = processos.filter(p => p.numero.toUpperCase().includes(termo));
+            }
+
+            if (listaFiltrada.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 3rem; background: #f6faff; border-radius: 50px;">Nenhum processo encontrado.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            listaFiltrada.forEach((proc, index) => {
+                const ordem = index + 1;
+                const dataFormatada = proc.data ? formatarDataBR(proc.data) : '—';
+                
+                html += `<tr class="linha-processo" data-id="${proc.id}">`;
+                html += `<td><span class="numero-ordem">${ordem}</span></td>`;
+                html += `<td><span class="data-badge"><i class="fas fa-calendar-alt"></i> ${dataFormatada}</span></td>`;
+                html += `<td><span class="badge-numero"><i class="fas fa-file"></i> ${escapeHtml(proc.numero)}</span></td>`;
+                html += `<td>${escapeHtml(proc.assunto)}</td>`;
+                html += `<td>${escapeHtml(proc.destino)}</td>`;
+                html += `<td>${escapeHtml(proc.observacoes || '—')}</td>`;
+                html += `<td class="acoes">
+                    <button class="btn-acao editar-acao" onclick="abrirModalEditar('${proc.id}')" title="Editar"><i class="fas fa-pencil"></i></button>
+                    <button class="btn-acao excluir-acao" onclick="abrirModalExcluir('${proc.id}')" title="Excluir"><i class="fas fa-trash"></i></button>
+                </td>`;
+                html += `</tr>`;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function escapeHtml(texto) {
+            if (!texto) return '';
+            const div = document.createElement('div');
+            div.textContent = texto;
+            return div.innerHTML;
+        }
+
+        // === VALIDAÇÃO ===
+        function validarNumeroProcesso(numero) {
+            return /^P\d+(\/\d+)?$/.test(numero);
+        }
+
+        // === TOAST ===
+        function mostrarToast(mensagem, tipo = 'sucesso') {
+            const toast = document.getElementById('toast');
+            const span = toast.querySelector('span');
+            span.textContent = mensagem;
+            toast.style.background = tipo === 'erro' ? '#b22234' : '#0a2540';
+            toast.classList.add('mostrar');
+            setTimeout(() => {
+                toast.classList.remove('mostrar');
+            }, 3000);
+        }
+
+        // === MODAL EDIÇÃO ===
+        function abrirModalEditar(id) {
+            const processo = processos.find(p => p.id === id);
+            if (!processo) return;
+
+            // Preencher formulário do modal
+            document.getElementById('editarId').value = processo.id;
+            document.getElementById('editarNumero').value = processo.numero;
+            document.getElementById('editarData').value = processo.data || '';
+            document.getElementById('editarAssunto').value = processo.assunto;
+            document.getElementById('editarDestino').value = processo.destino;
+            document.getElementById('editarObservacoes').value = processo.observacoes || '';
+
+            // Mostrar modal
+            document.getElementById('modalEditar').style.display = 'flex';
+        }
+
+        function fecharModalEditar() {
+            document.getElementById('modalEditar').style.display = 'none';
+        }
+
+        // === SALVAR EDIÇÃO DO MODAL ===
+        function salvarEdicaoModal(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('editarId').value;
+            const numero = document.getElementById('editarNumero').value.trim();
+            const data = document.getElementById('editarData').value;
+            const assunto = document.getElementById('editarAssunto').value.trim();
+            const destino = document.getElementById('editarDestino').value.trim();
+            const observacoes = document.getElementById('editarObservacoes').value.trim();
+
+            // Validações
+            if (!numero || !data || !assunto || !destino) {
+                mostrarToast('Preencha todos os campos obrigatórios', 'erro');
+                return;
+            }
+
+            if (!validarNumeroProcesso(numero)) {
+                mostrarToast('Formato inválido! Use P maiúsculo + números (ex: P2374/2025)', 'erro');
+                return;
+            }
+
+            if (!validarData(data)) {
+                mostrarToast('Data inválida!', 'erro');
+                return;
+            }
+
+            // Encontrar e atualizar processo
+            const index = processos.findIndex(p => p.id === id);
+            if (index !== -1) {
+                processos[index] = {
+                    ...processos[index],
+                    numero: numero,
+                    data: data,
+                    assunto: assunto,
+                    destino: destino,
+                    observacoes: observacoes
+                };
+                
+                salvarProcessos();
+                renderizarTabela(document.getElementById('campoBusca').value);
+                fecharModalEditar();
+                mostrarToast('Processo atualizado com sucesso!');
+            }
+        }
+
+        // === MODAL EXCLUIR ===
+        function abrirModalExcluir(id) {
+            processoParaExcluir = id;
+            document.getElementById('modalExcluir').style.display = 'flex';
+        }
+
+        function fecharModalExcluir() {
+            document.getElementById('modalExcluir').style.display = 'none';
+            processoParaExcluir = null;
+        }
+
+        // === CRUD - ADICIONAR PROCESSO ===
+        function adicionarProcesso(event) {
+            event.preventDefault();
+
+            const numero = document.getElementById('numeroProcesso').value.trim();
+            const data = document.getElementById('dataProcesso').value;
+            const assunto = document.getElementById('assunto').value.trim();
+            const destino = document.getElementById('destino').value.trim();
+            const observacoes = document.getElementById('observacoes').value.trim();
+
+            // Validações
+            if (!numero || !data || !assunto || !destino) {
+                mostrarToast('Preencha todos os campos obrigatórios', 'erro');
+                return;
+            }
+
+            if (!validarNumeroProcesso(numero)) {
+                mostrarToast('Formato inválido! Use P maiúsculo + números (ex: P2374/2025)', 'erro');
+                return;
+            }
+
+            if (!validarData(data)) {
+                mostrarToast('Data inválida!', 'erro');
+                return;
+            }
+
+            // Criar novo processo
+            const novoProcesso = {
+                id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                numero: numero,
+                data: data,
+                assunto: assunto,
+                destino: destino,
+                observacoes: observacoes || '',
+                dataInclusao: new Date().toLocaleDateString('pt-BR')
+            };
+
+            processos.push(novoProcesso);
+            salvarProcessos();
+            
+            // Limpar formulário
+            document.getElementById('numeroProcesso').value = '';
+            document.getElementById('dataProcesso').value = '';
+            document.getElementById('assunto').value = '';
+            document.getElementById('destino').value = '';
+            document.getElementById('observacoes').value = '';
+            
+            renderizarTabela();
+            mostrarToast('Processo registrado com sucesso!');
+        }
+
+        // === EXCLUIR PROCESSO ===
+        document.getElementById('confirmarExcluir').addEventListener('click', function() {
+            if (processoParaExcluir) {
+                processos = processos.filter(p => p.id !== processoParaExcluir);
+                salvarProcessos();
+                renderizarTabela(document.getElementById('campoBusca').value);
+                fecharModalExcluir();
+                mostrarToast('Processo excluído com sucesso!');
+            }
+        });
+
+        document.getElementById('cancelarExcluir').addEventListener('click', fecharModalExcluir);
+        
+        // Fechar modal ao clicar no overlay
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                fecharModalExcluir();
+            }
+            if (event.target.classList.contains('modal-editar-overlay')) {
+                fecharModalEditar();
+            }
+        };
+
+        // === PESQUISA ===
+        document.getElementById('btnBuscar').addEventListener('click', function() {
+            const termo = document.getElementById('campoBusca').value;
+            renderizarTabela(termo);
+        });
+
+        document.getElementById('campoBusca').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                renderizarTabela(this.value);
+            }
+        });
+
+        // === REFRESH ===
+        document.getElementById('btnRefresh').addEventListener('click', function() {
+            document.getElementById('campoBusca').value = '';
+            renderizarTabela('');
+            mostrarToast('Lista atualizada');
+        });
+
+        // === EVENTO DE REGISTRO ===
+        document.getElementById('btnRegistrar').addEventListener('click', adicionarProcesso);
+
+        // === FECHAR MODAL COM ESC ===
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                fecharModalEditar();
+                fecharModalExcluir();
+            }
+        });
+
+        // === INICIALIZAÇÃO ===
+        carregarProcessos();
+        renderizarTabela();
+    </script>
+</body>
+</html>
